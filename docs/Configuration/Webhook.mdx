@@ -1,0 +1,42 @@
+---
+title: Webhook
+description: Point your Plex Media Server's webhooks at Lumunarr
+sidebar_position: 2
+---
+
+## Configuring
+
+Lumunarr works by listening for webhooks sent from your Plex Media Server.
+
+:::note
+Plex only sends webhooks for accounts with an active Plex Pass.
+:::
+
+You must be an admin of the Plex Media Server to change its webhook settings. In Plex, open **Settings**, and under your account name select **Webhooks**. Click **Add Webhook** and enter a URL in this format:
+
+```
+http://<ip_address>:<port>/webhook
+```
+
+The IP address is the address of the machine Lumunarr is running on. The port depends on how you installed and started it (see [Installation](/docs/Installation)). If you set a URL base for a reverse proxy in [Settings → Host](/docs/Configuration/Settings#host), include it before `/webhook`, for example `http://<ip_address>:<port>/lumunarr/webhook`.
+
+:::info Important
+The URL must end in `/webhook`. That's the address where Lumunarr receives and processes webhooks.
+:::
+
+Once you save, Plex sends every webhook to Lumunarr and your client profiles start working.
+
+## Troubleshooting
+
+If webhooks are set up but the lights still don't respond, check these Plex Media Server settings:
+
+1. **Settings → Network:** click **Show Advanced** and make sure **Webhooks** is checked. This lets Plex send webhooks to outside services.
+2. **Settings → General:** make sure **Push Notifications** is checked. Some users have found webhooks don't work without it, and [Server Alerts](/docs/Configuration/Server) require it.
+
+If those are set, change the [log level](/docs/Configuration/Settings#logging) to **Debug**. The log will show each webhook Lumunarr receives and why each profile did or didn't act on it.
+
+## Webhooks to Nowhere
+
+Plex sends webhooks one at a time and waits for a response before sending the next one. If one of the webhook URLs in your Plex settings doesn't respond (for example, a mistyped address or a service that's offline), Plex pauses further webhooks while it waits.
+
+This shows up as delays between what you do on your player and when the lights change. To avoid it, make sure every URL in your Plex webhook settings points to a working service, and delete any you no longer use.

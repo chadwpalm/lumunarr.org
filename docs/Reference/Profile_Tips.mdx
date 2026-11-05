@@ -1,0 +1,59 @@
+---
+title: Profile Design Tips
+description: Avoid conflicting client profiles, plus an example theater setup
+sidebar_position: 2
+---
+
+## Profile Design Tips
+
+The three key parts of a client profile are its **Client**, **User** and **Media Type/Library**. If two profiles share all three, they'll both react to the same playback, so Lumunarr warns you when you try to save one.
+
+Be careful when choosing **Any** for User or **All** for Media Type. Those options can overlap with your other profiles and cause unexpected behavior.
+
+For example:
+
+> You create a profile for "My Roku" with **User** set to _Any_ and **Media Type** set to _Movie_. Then you create a second profile for "My Roku" with **User** set to _Bob_ and **Media Type** set to _Movie_. Bob also counts as _Any_, so when Bob watches a movie on "My Roku", **both** profiles are triggered.
+
+### Which Profile Wins?
+
+Lumunarr runs through matching profiles in the order they appear on the Clients page (left to right, top to bottom). Both profiles are triggered, one right after the other, so it's unpredictable which scene ends up on the lights.
+
+You can still use **Any** and **All**. Just make sure no other profile uses the same combination of the remaining two key parts.
+
+## Example: Theater Setup
+
+This example creates a movie theater experience using two profiles. Both use the same client and user. The scenes are named after brightness levels here, but you can use any Hue scenes.
+
+**Profile 1**
+
+| Setting    | Value             |
+| ---------- | ----------------- |
+| Client     | _Your player_     |
+| User       | _You_             |
+| Media Type | Trailer/Preroll   |
+| Play       | Medium Brightness |
+| Stop       | None              |
+| Pause      | High Brightness   |
+| Resume     | Medium Brightness |
+| Scrobble   | None              |
+
+**Profile 2**
+
+| Setting    | Value             |
+| ---------- | ----------------- |
+| Client     | _Your player_     |
+| User       | _You_             |
+| Media Type | Movie             |
+| Play       | Low Brightness    |
+| Stop       | High Brightness   |
+| Pause      | High Brightness   |
+| Resume     | Low Brightness    |
+| Scrobble   | Medium Brightness |
+
+Here's what happens:
+
+1. **Trailers start:** the lights go to medium. Pausing brings them up high until you resume.
+2. **Trailers end:** the lights stay at medium, since Profile 1 has no Stop scene.
+3. **The movie starts:** the lights dim to low. Pausing and resuming takes them up high and back down to low.
+4. **The credits roll:** the lights come back up to medium when Plex [scrobbles](/docs/Reference/Scrobble), either at a percentage of the movie watched or when the credits start, depending on your Plex server settings.
+5. **The movie ends or is stopped:** the lights return to high.

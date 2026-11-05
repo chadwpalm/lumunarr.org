@@ -1,0 +1,30 @@
+---
+title: Scrobble
+description: What the Plex scrobble event is and how to time it with the credits
+sidebar_position: 1
+---
+
+## What Is Scrobble?
+
+In the media world, a scrobbler sends information about what you watch to another service, like [Trakt](https://trakt.tv). Plex has a built-in scrobbler that sends a webhook when you finish watching something. Lumunarr doesn't need the details it sends, only the moment it fires, which makes it a useful trigger for the end of a movie or episode.
+
+**Plex sends the scrobble webhook at the moment it marks the video as played.**
+
+## When Does Scrobble Happen?
+
+Depending on how your Plex Media Server is set up, Plex marks a video as played at one of these points:
+
+- When a set percentage of the video has been watched (90% by default)
+- At the first credits marker
+- At the final credits marker
+- At whichever comes first: the set percentage or the first credits marker
+
+:::info
+Credits detection was added in Plex Media Server version 1.31.0. You can find the **Video played threshold** and **Video play completion behavior** settings under **Settings → Library** in your Plex Media Server settings.
+:::
+
+## Using Scrobble With Credits Detection
+
+When scrobble is tied to the credits, you can bring the lights up as soon as the credits start rolling instead of waiting for playback to stop. It's a fun way to recreate a movie theater experience. See the [example setup](/docs/Reference/Profile_Tips#example-theater-setup).
+
+Plex tends to send the scrobble webhook a second or two before the credits actually start, which can give away a cliff-hanger ending. Use the profile's [Scrobble Delay](/docs/Configuration/Clients#scrobble-delay) to hold the lights for a few more seconds.

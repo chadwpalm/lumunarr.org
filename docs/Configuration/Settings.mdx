@@ -1,0 +1,90 @@
+---
+title: Settings
+description: Global defaults, location, host and logging settings
+sidebar_position: 6
+---
+
+The **Settings** page has four sections: **Global Settings**, **Geographical Location**, **Host** and **Logging**. Click **Save** (or **Update**) at the bottom of the page to save your changes.
+
+## Global Settings
+
+These are shared defaults. A client profile or the Server page uses them when its own option is set to **Global**.
+
+### Scene Transition Time
+
+How long the lights take to fade into a new scene, from 0.2 to 10 seconds.
+
+Moving the slider all the way down selects **Default**, which uses the transition time saved in the scene on the bridge (for example by another app). If the scene has none saved, Hue's default of 0.4 seconds is used. Any other time overrides the transition time saved in the scene.
+
+### Schedule
+
+A default daily time range, set with a start and end time, for when the lights can be triggered. Client profiles and server alerts use it when their schedule is set to **Global**.
+
+## Geographical Location
+
+The **Sunset/Sunrise** schedule needs to know where you are to look up each day's sunset and sunrise times. Enter your location as a latitude and longitude:
+
+1. Visit [LatLong.net](https://www.latlong.net/).
+2. Find your location using the search box or the map.
+3. Copy the latitude and longitude into the fields on the Settings page.
+
+Use decimal numbers exactly as LatLong.net shows them. Degrees, minutes and seconds won't work. Locations in the Southern and Western hemispheres have negative numbers, which is expected.
+
+For example, San Francisco is about `37.762488` latitude and `-122.455947` longitude.
+
+:::note
+If you run Lumunarr in Docker, also set the [`TZ` variable](/docs/Installation/Docker#parameters) so sunset and sunrise happen at the right local time.
+:::
+
+## Host
+
+The top of this section shows the port and URL base Lumunarr is currently running on.
+
+### Port Number
+
+The port Lumunarr runs on. If left blank, it uses the default port `3939`.
+
+:::note
+In Docker, this is the port _inside_ the container. Lumunarr picks its port in this order:
+
+1. The `APP_PORT` environment variable (see [Docker](/docs/Installation/Docker#parameters)).
+2. The port set here.
+3. The default port, `3939`.
+
+When `APP_PORT` is set, this field is locked and shows a note saying the environment variable is being used.
+:::
+
+### URL Base
+
+A URL base for running Lumunarr behind a reverse proxy. Leave it empty if you don't use one.
+
+For example, to serve Lumunarr at `mydomain.com/lumunarr`, enter `/lumunarr`. Remember to add the URL base to your [webhook](/docs/Configuration/Webhook) URL as well.
+
+When the `APP_BASE_URL` environment variable is set, this field is locked and the environment variable is used instead.
+
+:::warning Important
+Port and URL base changes only take effect after you restart Lumunarr. After restarting, open Lumunarr at the new port or URL base. In Docker, the health check follows the new settings automatically.
+:::
+
+## Logging
+
+Logs are written to the `logs` folder inside your config folder, and to the console. Changes take effect as soon as you save, without a restart.
+
+### Log Level
+
+- **Info:** what Lumunarr did, such as webhooks received, scenes recalled and errors. Each Plex event is logged along with which profile acted on it, or a note if no profile matched.
+- **Debug:** also why Lumunarr did or didn't act, such as why a profile skipped a webhook (a different player, user, media type or library, outside its schedule, or room lights off), plus every request and the details of Hue and Plex lookups.
+
+:::tip
+If something isn't working, switch to **Debug** and check the log before opening an issue on GitHub or asking on Discord. It usually shows exactly why the lights didn't change.
+:::
+
+Plex tokens and Hue keys are masked in the logs, so they're safe to share when asking for help.
+
+### Max File Size (MB)
+
+How large a log file can get before a new one is started, from 1 to 100 MB. The default is 10 MB.
+
+### Files to Keep
+
+How many log files to keep, from 1 to 60. A new file starts each day or when the size limit is reached, and the oldest files are deleted. The default is 5.

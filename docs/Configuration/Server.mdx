@@ -1,0 +1,36 @@
+---
+title: Server Alerts
+description: Use a Hue light to signal Plex server activity
+sidebar_position: 5
+---
+
+The **Server** page sets up alerts for things happening on your Plex server that aren't tied to your own playback. Instead of Hue scenes, server alerts control a single light, or all the lights in a room or zone in the same color.
+
+:::info Important
+Server alerts need push notifications turned on in Plex. In your Plex server settings, open **General** and make sure **Push Notifications** is checked. This lets Plex send webhooks about playback and library activity.
+:::
+
+## Playback Started
+
+Turns on or blinks a light when any user with access to your Plex server starts watching something.
+
+- **Room:** the Hue room or zone that contains the light you want to use.
+- **Light:** the light to turn on or blink. Choose **All** to use every light in the room, or **None** to turn this alert off. Choosing **None** grays out the remaining options.
+- **Behavior:**
+  - **Turn On:** turns the light on and leaves it on. If it's already on, it changes to the color and brightness below. Lumunarr won't turn it back off, so you'll need to do that another way.
+  - **Blink:** blinks the light a set number of times, then returns it to how it was before.
+- **Intervals:** how many times to blink, from 1 to 10. Only shown when Behavior is **Blink**.
+- **Color:** Red, Orange, Yellow, Green, Blue, Purple or White.
+- **Brightness:** how bright the light is when it turns on or blinks, from 5% to 100%.
+
+## Library New
+
+Turns on or blinks a light when new media is added to your Plex server. The options are the same as [Playback Started](#playback-started).
+
+## Schedule
+
+Limits when server alerts are active, so a light doesn't start blinking in the middle of the night. The options are the same as the [client profile schedule](/docs/Configuration/Clients#schedule) and apply to both alerts.
+
+## Saving
+
+Click **Save** to save your changes. Every option must be filled in for each alert you've turned on.

@@ -1,0 +1,39 @@
+---
+title: Initial Startup
+description: Open Lumunarr for the first time and sign in with Plex
+sidebar_position: 1
+---
+
+:::warning
+Lumunarr does not support 1st generation (round) Hue bridges.
+:::
+
+## User Interface
+
+Once Lumunarr is running, open its web interface in a browser:
+
+```
+http://<ip_address_of_server>:<port>
+```
+
+:::info
+The IP address is the address of the machine Lumunarr is running on. The port depends on how you installed and started it (see [Installation](/docs/Installation)).
+
+Default port: `3939`
+:::
+
+## Plex Login
+
+The first time Lumunarr starts, it creates a new settings file and asks you to sign in with your Plex account.
+
+:::info
+Everything Lumunarr knows about Plex comes from the account you sign in with. Lumunarr can only see Plex clients (players) that are signed in to that same account. If you want to control the lights for a particular player, sign in to it with the same Plex account you use for Lumunarr.
+:::
+
+## Next Steps
+
+After signing in you'll be taken to the [Bridge](/docs/Configuration/Bridge) page to connect your Hue bridge. The **Clients**, **Server** and **Settings** pages stay disabled until a bridge is connected.
+
+:::warning Don't forget!
+Lumunarr can't do anything until Plex sends it webhooks. Make sure you also set up your [Webhook](/docs/Configuration/Webhook).
+:::

@@ -1,0 +1,145 @@
+---
+title: Client Profiles
+description: Create client profiles that link Plex playback to Hue scenes
+sidebar_position: 4
+---
+
+The **Clients** page is where you create client profiles. A profile links a Plex player to a Hue room and chooses which scene runs for each playback event. Each profile is shown as a card that you can edit, copy or delete later.
+
+## Profile Cards
+
+Each card shows the profile's title, user and media type, along with these controls:
+
+- **X** (top right): delete the profile.
+- **Switch** (bottom left): turn the profile on or off. When it's off, the profile is ignored completely, even inside its schedule.
+- **Copy** (double square): make a copy of the profile with "(copy)" added to the title.
+- **Edit** (bottom right): change the profile's settings.
+
+To create a new profile, click the card with the plus sign.
+
+## Profile
+
+### Title
+
+The name shown on the profile's card. If you leave it blank, the client's name is used.
+
+### Client
+
+The Plex player this profile controls. The list shows every player signed in to your Plex account (see [Plex Login](/docs/Configuration/Initial_Startup#plex-login)), with the most recently used at the top.
+
+Each client is shown as: _Name (Platform) - Product, version: Version (Device) - created: Time ago_
+
+### User
+
+The Plex user whose playback controls the lights. Who appears in this list depends on your setup:
+
+1. **Typical Plex user:** just you, the account signed in to Lumunarr.
+2. **Plex Home:** you plus the managed users in your Plex Home.
+3. **Plex Media Server admin:** you plus every user who has access to your server.
+
+Choose **Any** to let any user on that player control the lights.
+
+### Media Type
+
+The kind of media that triggers the profile:
+
+- **Movie**
+- **TV Show**
+- **Trailer/Preroll**
+- **All**
+
+Choose **All** to trigger the profile for every media type.
+
+:::caution
+Choosing **Any** for User or **All** for Media Type shows a warning you need to acknowledge. These options can overlap with your other profiles and cause unexpected behavior. See [Profile Design Tips](/docs/Reference/Profile_Tips) before using them.
+:::
+
+### Library
+
+Appears when the media type is **Movie** or **TV Show**. Choose a specific library of that type, or **All** for every matching library.
+
+Each library is listed with the Plex server it belongs to, in case you have libraries with the same name on more than one server.
+
+### Room
+
+The Hue room or zone this profile controls. The scenes you can choose under [Actions](#actions) come from this room.
+
+### Ignore triggers if lights in room are off
+
+When checked, the **Play**, **Stop**, **Pause** and **Resume** actions do nothing if every light in the room is off. Schedules still apply either way.
+
+:::warning
+If one of your actions turns the lights off, Lumunarr won't turn them back on while this is checked. You'll need to uncheck it or turn the lights on yourself.
+:::
+
+## Actions
+
+Each Plex event has its own row where you choose what happens to the room's lights:
+
+| Event        | When it happens                                                                                     |
+| ------------ | --------------------------------------------------------------------------------------------------- |
+| **Play**     | Playback starts from a stopped state.                                                               |
+| **Stop**     | Playback is stopped or ends.                                                                        |
+| **Pause**    | Playback is paused.                                                                                 |
+| **Resume**   | Playback continues after a pause.                                                                   |
+| **Scrobble** | Plex marks the item as watched, often as the end credits start. See [Scrobble](/docs/Reference/Scrobble). |
+
+For each event you can choose:
+
+- **None:** leave the lights as they are.
+- **Off:** turn the room's lights off.
+- **A Hue scene** from the selected room.
+- **Restore Pre-Play** (Stop and Pause only): put the lights back the way they were when Play was pressed, including color, color temperature and effects.
+- **Poster** (Movie and TV Show only): set the lights to colors from the poster. See [Poster Colors](#poster-colors).
+
+### Pause Delay
+
+Waits before running the Pause action, from **Off** up to 5000 ms. If Plex sends a Resume before the delay runs out, the Pause action is skipped.
+
+This is meant for Plex players that send a pause webhook when you seek forward or back. Keep in mind that it delays normal pauses too, so pick the shortest delay that fixes seeking.
+
+### Scrobble Delay
+
+Waits before running the Scrobble action, from **Off** up to 15000 ms. Plex tends to send the scrobble event a second or two before the credits start, which can give away a cliff-hanger ending. A short delay holds the lights until the credits are actually rolling.
+
+### Poster Colors
+
+:::note
+Poster colors is an experimental feature. Please share feedback or problems in [GitHub Discussions](https://github.com/chadwpalm/Lumunarr/discussions) or [Issues](https://github.com/chadwpalm/Lumunarr/issues).
+:::
+
+When an event is set to **Poster**, Lumunarr picks colors from the poster of whatever is playing and applies them to the room's lights. For movies it uses the movie poster. For TV shows it uses the show's poster rather than the episode's or season's. These options appear under that event:
+
+- **Max Brightness:** the brightest the lights will go. Each light's brightness is scaled between 5% (for near-black colors) and this maximum, based on how bright its color is.
+- **Number of Colors:** use 1 to 5 colors from the poster. Colors are ordered by how much of the poster they cover.
+- **Dominant Light:** the light that gets the poster's most dominant color. Choose **None** if it doesn't matter which light gets it.
+
+## Timing
+
+### Scene Transition Time
+
+How long the lights take to fade into a new scene.
+
+- **Local:** set a time just for this profile, from 0.2 to 10 seconds. Moving the slider all the way down selects **Default**, which uses the transition time saved in the scene on the bridge (for example by another app). If the scene has none saved, Hue's default of 0.4 seconds is used.
+- **Global:** use the transition time from [Settings](/docs/Configuration/Settings#scene-transition-time).
+
+Any time other than **Default** overrides the transition time saved in the scene.
+
+### Schedule
+
+Limits when the profile is active, for example so the lights don't change during the day.
+
+1. **None:** no schedule. The profile is active whenever its card switch is on.
+2. **Global:** use the schedule from [Settings](/docs/Configuration/Settings#schedule).
+3. **Range:** active between a start and end time each day, set in the extra fields that appear.
+4. **Sunset/Sunrise:** active between sunset and sunrise. This needs your [Geographical Location](/docs/Configuration/Settings#geographical-location) set in Settings, and in Docker the [`TZ` variable](/docs/Installation/Docker#parameters) must be set too.
+
+:::note
+The switch on the profile card always wins. If the switch is off, the profile stays off even during its schedule.
+:::
+
+## Saving
+
+Click **Save** (or **Update** when editing) to save the profile. Every field must be filled in before the profile can be saved.
+
+If another profile already uses the same client, user and media type, Lumunarr warns you before saving. See [Profile Design Tips](/docs/Reference/Profile_Tips).

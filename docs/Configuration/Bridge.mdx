@@ -1,0 +1,41 @@
+---
+title: Bridge
+description: Find and link your Philips Hue bridge
+sidebar_position: 3
+---
+
+The **Bridge** page connects Lumunarr to your Hue bridge. You'll land here automatically after signing in for the first time. The **Clients**, **Server** and **Settings** pages stay disabled until a bridge is linked, since they all need to talk to it.
+
+## Finding Your Bridge
+
+Click **Search** to look for Hue bridges on your network. Lumunarr lists every bridge it finds.
+
+Select the bridge you want Lumunarr to use.
+
+:::tip
+If you have more than one bridge and aren't sure which is which, the bridge ID is printed on the underside of each bridge.
+:::
+
+### Bridge Not Found
+
+If no bridges are found, you can enter the bridge's IP address yourself. You can usually find it in the Hue app or in your router's list of connected devices.
+
+If Lumunarr runs in Docker without [host network mode](/docs/Installation/Docker#host-network-mode), it can't search your local network directly and relies on Hue's cloud discovery service instead. If that doesn't find your bridge, enter its IP address manually.
+
+## Linking the Bridge
+
+After choosing a bridge, click **Press Me**. You then have **30 seconds** to press the round link button on top of the Hue bridge.
+
+When you see **Lumunarr is linked to Hue Bridge**, you're done. If the button wasn't pressed in time, click **Try Again**.
+
+## Removing the Bridge
+
+To unlink the bridge, go back to the **Bridge** page and click **Remove Bridge**.
+
+## Bridge IP Address Changes
+
+Every 15 minutes, Lumunarr checks that the bridge is still at the IP address it was linked with. If it isn't, Lumunarr searches the network for a bridge with the same bridge ID and updates the address automatically.
+
+:::tip
+Giving your Hue bridge a static IP address (a DHCP reservation in your router) is still recommended, but it isn't required.
+:::

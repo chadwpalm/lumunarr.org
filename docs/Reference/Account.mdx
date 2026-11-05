@@ -1,0 +1,63 @@
+---
+title: Account Menu
+description: The account menu and the About dialog
+sidebar_position: 3
+---
+
+At the far right of the menu bar is a drop-down menu shown as your Plex account picture. Next to it, the sun/moon icon switches between light and dark mode.
+
+### Plex Account Information
+
+The top of the menu shows the username and email address of the Plex account signed in to Lumunarr.
+
+### Documentation
+
+A link to this documentation.
+
+### About
+
+Opens a window with information about this copy of Lumunarr.
+
+#### Version
+
+The Lumunarr version that's running, in Major.Minor.Patch format.
+
+#### Branch
+
+The GitHub branch this copy was built from, either main or develop. In Docker, the `latest` tag is built from `main` and the `develop` tag from `develop`.
+
+#### Build
+
+In Docker, the build number, which helps tell builds apart. When running natively it says `Native`.
+
+#### Config Dir
+
+The folder where Lumunarr keeps its settings and logs. It's `/config` unless you've changed it with the `CONFIG_DIR` environment variable (see [Native](/docs/Installation/Native#environment-variables)). In Docker, this is the folder inside the container, so mount your config folder there (see [Docker](/docs/Installation/Docker)).
+
+#### App Dir
+
+The folder Lumunarr was started from. In Docker this is always `/app`.
+
+#### App ID
+
+A unique ID for this copy of Lumunarr.
+
+#### Docker
+
+A link to the Docker Hub page for Lumunarr.
+
+#### Source
+
+A link to the Lumunarr source code on GitHub.
+
+### Donate
+
+A link to support Lumunarr's development through Buy Me a Coffee.
+
+### Update Available
+
+Appears when a newer version of Lumunarr is available, and the menu icon shows a **!** badge. The link opens the version history so you can see what's new.
+
+### Sign Out
+
+Signs your Plex account out of Lumunarr.

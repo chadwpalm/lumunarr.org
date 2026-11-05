@@ -1,0 +1,53 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.heroLogoContainer {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.heroLogo {
+  max-width: 180px;
+  height: auto;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 996px) {
+  .heroLogo {
+    max-width: 100px;
+  }
+}
+
+/* Optional: Add subtle effects */
+.heroLogo {
+  /* filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); */ /* Nice shadow if wanted */
+  transition: transform 0.2s ease-in-out;
+}
+
+.heroLogo:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
