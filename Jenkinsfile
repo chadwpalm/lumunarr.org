@@ -20,6 +20,9 @@ pipeline {
                     echo "Build number: ${buildNum}"
 
                     def hostWorkspace = WORKSPACE.replace('/var/jenkins_home', WORK_DIR)
+                    // TEMP debug: show the bind-mount path without the masked secret
+                    echo "WORKSPACE: ${WORKSPACE}"
+                    echo "Host path: ${hostWorkspace.replace(WORK_DIR, '<WORK_DIR>')}"
 
                     sh """
                         docker run --rm \
