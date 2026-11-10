@@ -26,6 +26,28 @@ Default port: `3939`
 
 The first time Lumunarr starts, it creates a new settings file and asks you to sign in with your Plex account.
 
+Click **Sign in** and a Plex window opens. Plex shows which account you're about to sign in with. If it's the wrong one, choose **Not you?** to switch accounts. While Lumunarr waits for Plex, the button changes to **Waiting for Plex... (Cancel)**, which you can click to stop waiting.
+
+:::tip
+If nothing happens when you click **Sign in**, your browser may be blocking pop-ups. Allow pop-ups for Lumunarr's page and try again.
+:::
+
+### The Owner Account
+
+The Plex account you sign in with the first time becomes Lumunarr's **owner**. From then on, only the owner can sign in. Any other Plex account is refused with a message saying it doesn't have access.
+
+Upgrading from a version before 1.7.1? Lumunarr recognizes the owner from your existing sign-in automatically, so there's nothing to do.
+
+:::note
+If the owner account can no longer sign in, see [Locked out](/docs/Configuration/Settings#locked-out).
+:::
+
+### Sessions
+
+Each browser you sign in from stays signed in for 30 days, and the time is renewed while you keep using it. Signing out only signs out that browser, and updating Lumunarr doesn't sign anyone out.
+
+Every page needs a signed-in browser, except the [webhook](/docs/Configuration/Webhook) that Plex sends to. You can relax this for your local network, or turn it off behind a reverse proxy that already requires a login, under [Settings → Security](/docs/Configuration/Settings#security).
+
 :::info
 Everything Lumunarr knows about Plex comes from the account you sign in with. Lumunarr can only see Plex clients (players) that are signed in to that same account. If you want to control the lights for a particular player, sign in to it with the same Plex account you use for Lumunarr.
 :::

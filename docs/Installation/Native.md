@@ -85,7 +85,7 @@ If `PUID` and `PGID` are set, Lumunarr changes the owner of its settings file to
 
 ## Environment variables
 
-The [Docker parameters](/docs/Installation/Docker#parameters) `APP_PORT`, `APP_BASE_URL`, `PUID`, `PGID` and `TZ` work natively too. There is one extra variable for native installs:
+The [Docker parameters](/docs/Installation/Docker#parameters) `APP_PORT`, `APP_BASE_URL`, `DISABLE_AUTH`, `PUID`, `PGID` and `TZ` work natively too. There is one extra variable for native installs:
 
 | Variable     | Description                                                                                                                                  |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |

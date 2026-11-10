@@ -26,6 +26,14 @@ Lumunarr images are on Docker Hub at [chadwpalm/lumunarr](https://hub.docker.com
 
 `develop` is the newest development release. Development releases include new features that are still being tested and may not be stable. Earlier development releases are tagged with their version number after `develop-`.
 
+### Architectures
+
+Every tag is multi-architecture and runs on both **amd64** (64-bit Intel/AMD) and **arm64** (64-bit ARM, such as a Raspberry Pi running a 64-bit OS). Docker pulls the right one for your machine automatically.
+
+:::note
+Starting with version 1.7.1, the separate `-arm` tags are no longer published. If you used one, switch to `latest` (or `develop`). 32-bit ARM (arm/v7) is no longer supported.
+:::
+
 ## Usage
 
 <Tabs>
@@ -77,6 +85,7 @@ Once the container is running, open `http://<your-server-ip>:3939` in a browser 
 | `-e TZ`           | Time zone, for example `America/Los_Angeles`. Used for log timestamps, and required for schedules, including sunrise and sunset, to run at the right time.                                           |
 | `-e APP_PORT`     | _Optional._ The port Lumunarr runs on inside the container. Defaults to `3939`. Overrides the port set in **Settings → Host**.                                                                       |
 | `-e APP_BASE_URL` | _Optional._ A URL base for running behind a reverse proxy, for example `/lumunarr` to serve it at `mydomain.com/lumunarr`. Overrides the URL base set in **Settings → Host**.                         |
+| `-e DISABLE_AUTH` | _Optional, for recovery only._ Set to `true` to turn sign-in off and let a different Plex account take over as the owner. Overrides **Settings → Security**. See [Locked out](/docs/Configuration/Settings#locked-out).         |
 | `-v /config`      | Where Lumunarr keeps its settings and logs. Format: `<host path>:/config`. The right side must always be `/config`.                                                                                  |
 | `-p`              | _Only without host network mode._ Port mapping in the format `<host port>:<container port>`. The container port must match `APP_PORT` or the port in **Settings → Host** (`3939` by default).          |
 | `--restart`       | Docker's [restart behavior](https://docs.docker.com/engine/containers/start-containers-automatically/), for example `unless-stopped`.                                                                 |

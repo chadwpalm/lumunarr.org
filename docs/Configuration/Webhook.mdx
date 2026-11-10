@@ -24,6 +24,8 @@ The IP address is the address of the machine Lumunarr is running on. The port de
 The URL must end in `/webhook`. That's the address where Lumunarr receives and processes webhooks.
 :::
 
+The webhook address doesn't need a sign-in, so Plex can reach it even when [Authentication](/docs/Configuration/Settings#security) is set to **Required**. If your reverse proxy requires its own login, let `/webhook` through without one.
+
 Once you save, Plex sends every webhook to Lumunarr and your client profiles start working.
 
 ## Troubleshooting

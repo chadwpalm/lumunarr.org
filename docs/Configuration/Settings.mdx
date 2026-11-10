@@ -1,10 +1,10 @@
 ---
 title: Settings
-description: Global defaults, location, host and logging settings
+description: Global defaults, location, host, logging and security settings
 sidebar_position: 6
 ---
 
-The **Settings** page has four sections: **Global Settings**, **Geographical Location**, **Host** and **Logging**. Click **Save** (or **Update**) at the bottom of the page to save your changes.
+The **Settings** page has five sections: **Global Settings**, **Geographical Location**, **Host**, **Logging** and **Security**. Click **Save** (or **Update**) at the bottom of the page to save your changes.
 
 ## Global Settings
 
@@ -88,3 +88,34 @@ How large a log file can get before a new one is started, from 1 to 100 MB. The 
 ### Files to Keep
 
 How many log files to keep, from 1 to 60. A new file starts each day or when the size limit is reached, and the oldest files are deleted. The default is 5.
+
+## Security
+
+### Authentication
+
+Who has to sign in with Plex to use Lumunarr. Only the [owner account](/docs/Configuration/Initial_Startup#the-owner-account) can sign in, whichever option you choose. Changes take effect as soon as you save.
+
+- **Required** (default): every browser must sign in.
+- **Not required for local addresses:** browsers on your local network (private addresses such as `192.168.x.x`) are let in without signing in. Everyone else must sign in.
+- **Off:** no sign-in at all. Anyone who can reach Lumunarr can use it and change its settings. Only choose this if something else, such as your reverse proxy, already requires a login.
+
+The Plex [webhook](/docs/Configuration/Webhook) never needs a sign-in, whatever this is set to.
+
+:::warning Reverse proxies
+Behind a reverse proxy, Lumunarr reads the visitor's real address from the `X-Forwarded-For` header, but only when the proxy itself is on your local network. If your proxy doesn't send `X-Forwarded-For`, every visitor looks like they're coming from the proxy's local address, so **Not required for local addresses** would let everyone in. Use **Required** in that case.
+:::
+
+When you're let in without signing in, the **Sign Out** option is hidden from the [account menu](/docs/Reference/Account#sign-out).
+
+### Locked Out
+
+If the owner account can't sign in any more (for example, you've closed that Plex account), start Lumunarr with the `DISABLE_AUTH` environment variable set to `true` (see [Docker](/docs/Installation/Docker#parameters)). This:
+
+- Turns sign-in off, regardless of the **Authentication** setting. The setting is locked and shows a note that `DISABLE_AUTH` is in control.
+- Lets a different Plex account become the new owner the next time it signs in.
+
+Once the new owner has signed in, remove `DISABLE_AUTH` and restart Lumunarr to turn sign-in back on.
+
+:::danger
+While `DISABLE_AUTH` is set, anyone who can reach Lumunarr can use it. Don't leave it on.
+:::
