@@ -109,12 +109,11 @@ When you're let in without signing in, the **Sign Out** option is hidden from th
 
 ### Locked Out
 
-If the owner account can't sign in any more (for example, you've closed that Plex account), start Lumunarr with the `DISABLE_AUTH` environment variable set to `true` (see [Docker](/docs/Installation/Docker#parameters)). This:
+If the owner account can't sign in any more (for example, you've closed that Plex account), you can make a different Plex account the owner:
 
-- Turns sign-in off, regardless of the **Authentication** setting. The setting is locked and shows a note that `DISABLE_AUTH` is in control.
-- Lets a different Plex account become the new owner the next time it signs in.
-
-Once the new owner has signed in, remove `DISABLE_AUTH` and restart Lumunarr to turn sign-in back on.
+1. Restart Lumunarr with the `DISABLE_AUTH` environment variable set to `true` (see [Docker](/docs/Installation/Docker#parameters)). This turns sign-in off, regardless of the **Authentication** setting, so you can get into Lumunarr without signing in. The setting is locked and shows a note that `DISABLE_AUTH` is in control.
+2. Open the [account menu](/docs/Reference/Account#sign-in) (top right) and choose **Sign In**. (If Lumunarr's saved Plex sign-in no longer works, the sign-in page opens by itself.) Sign in with the Plex account you want to use, choosing **Not you?** on the Plex page if it offers a different account. While `DISABLE_AUTH` is set, any Plex account is accepted, and it becomes the new owner.
+3. Remove `DISABLE_AUTH` and restart Lumunarr to turn sign-in back on.
 
 :::danger
 While `DISABLE_AUTH` is set, anyone who can reach Lumunarr can use it. Don't leave it on.
